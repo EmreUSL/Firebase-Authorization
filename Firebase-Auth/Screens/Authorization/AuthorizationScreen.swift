@@ -11,6 +11,7 @@ protocol AuthorizationScreenInterface {
     func configureTextFields()
     func configureLabels()
     func configureButtons()
+    func showLoginError(errorType: LoginError)
 }
 
 class AuthorizationScreen: UIViewController {
@@ -24,6 +25,9 @@ class AuthorizationScreen: UIViewController {
     private var loginButton: UIButton!
     private var newAccountButton: UIButton!
 
+    override func viewDidAppear(_ animated: Bool) {
+        userTextField.becomeFirstResponder() 
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,31 +35,36 @@ class AuthorizationScreen: UIViewController {
         viewModel.viewDidLoad()
     }
     
-    @objc private func didTapLoginButton() {
-        
+    @objc private func didTapLoginButton(sender: UIButton) {
+        sender.animateButton()
+        guard let email = userTextField.text,
+        let password = passwordTextField.text
+        else { return }
+        viewModel.loginAccount(email: email, password: password)
     }
 
-    @objc private func didTapNewAccountButton() {
+    @objc private func didTapNewAccountButton(sender: UIButton) {
+        sender.animateButton()
         let newAccountScreen = NewAccountScreen()
         navigationController?.pushViewController(newAccountScreen, animated: true)
     }
-
+    
 }
 
 extension AuthorizationScreen: AuthorizationScreenInterface {
-
-    
+  
     func configureTextFields() {
         view.backgroundColor = UIColor.white
         
         userTextField = UITextField()
         userTextField.translatesAutoresizingMaskIntoConstraints = false
-        userTextField.placeholder = "Please enter a username"
         userTextField.layer.borderWidth = 1
         userTextField.layer.borderColor = UIColor.black.cgColor
         userTextField.layer.cornerRadius = 10
         userTextField.layer.masksToBounds = true
+        userTextField.autocapitalizationType = .none
         userTextField.textColor = UIColor.systemBackground
+        userTextField.becomeFirstResponder()
         view.addSubview(userTextField)
 
         passwordTextField = UITextField()
@@ -65,10 +74,14 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.textColor = UIColor.systemBackground
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocapitalizationType = .none
+        passwordTextField.becomeFirstResponder()
         view.addSubview(passwordTextField)
     
         NSLayoutConstraint.activate([
-            userTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            userTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            userTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: -100),
             userTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             userTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             userTextField.heightAnchor.constraint(equalToConstant: 45),
@@ -163,4 +176,27 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
             informationLabel.trailingAnchor.constraint(equalTo: newAccountButton.trailingAnchor),
         ])
     }
+    
+    func showLoginError(errorType: LoginError) {
+        
+        switch errorType {
+        case .emptyEmail:
+            let alert = UIAlertController(title: "Email cannot be blank!", message: "",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
+            present(alert, animated: true)
+        case .emptyPassword:
+            let alert = UIAlertController(title: "Password cannot be blank!", message: "",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
+            present(alert, animated: true)
+        case .wrong:
+            let alert = UIAlertController(title: "Your email or password wrong!", message: "",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
+            present(alert, animated: true)
+        }
+       
+    }
+    
 }
