@@ -31,12 +31,9 @@ extension NewAccountScreenViewModel: NewAccountScreenViewModelInterface {
         
         FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { _, error in
             guard error == nil else {
-                //paswword must be at least 6 digit
+                self.view?.showLoginError(errorType: LoginError.atLeastSix)
                 return }
             self.view?.succesfullAccountPopUp()
-            // Shop Pop Up You have succeffully create new account
-            // if tapped okey navigate to login screen 
         }
     }
-    
 }

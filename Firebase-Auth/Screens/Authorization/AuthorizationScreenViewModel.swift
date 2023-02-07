@@ -12,20 +12,24 @@ enum LoginError {
     case emptyEmail
     case emptyPassword
     case wrong
+    case atLeastSix
 }
 
 protocol AuthorizationScreenViewModelInterface {
     var view: AuthorizationScreenInterface? { get set }
     func viewDidLoad()
     func loginAccount(email: String, password: String)
+    func getShowPasswordImageName() -> (String,Bool)
     
 }
 
 final class AuthorizationScreenViewModel {
     var view: AuthorizationScreenInterface?
+    private var check = true
 }
 
 extension AuthorizationScreenViewModel: AuthorizationScreenViewModelInterface {
+ 
 
     func viewDidLoad() {
         view?.configureTextFields()
@@ -39,14 +43,23 @@ extension AuthorizationScreenViewModel: AuthorizationScreenViewModelInterface {
         if password == "" { view?.showLoginError(errorType: LoginError.emptyPassword); return }
         
         Firebase.Auth.auth().signIn(withEmail: email, password: password) { _, error in
-                guard error == nil else {
-                    self.view?.showLoginError(errorType: LoginError.wrong)
-                    return
-                }
-                
-                //Navigate To MainMenu
+            guard error == nil else {
+                self.view?.showLoginError(errorType: LoginError.wrong)
+                return
             }
-        
+            self.view?.navigateMainMenu()
+        }
     }
+    
+    func getShowPasswordImageName() -> (String,Bool) {
+        check = !check
+        
+        if check == true {
+            return ("eye.slash", check)
+        } else {
+           return ("eye", check)
+        }
+    }
+    
    
 }

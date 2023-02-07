@@ -11,6 +11,8 @@
 		6448B9A9298FF38E00A46563 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6448B9A8298FF38E00A46563 /* GoogleService-Info.plist */; };
 		6448B9AB298FF49900A46563 /* NewAccountScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6448B9AA298FF49900A46563 /* NewAccountScreenViewModel.swift */; };
 		64B708F22990450500819864 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B708F12990450500819864 /* UIView+Ext.swift */; };
+		64C6AD222992D93400F4E716 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C6AD212992D93400F4E716 /* MainScene.swift */; };
+		64C6AD242992D93E00F4E716 /* MainSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C6AD232992D93E00F4E716 /* MainSceneViewModel.swift */; };
 		64FB5176298FC66D0041F669 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FB5175298FC66D0041F669 /* AppDelegate.swift */; };
 		64FB5178298FC66D0041F669 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FB5177298FC66D0041F669 /* SceneDelegate.swift */; };
 		64FB517A298FC66D0041F669 /* AuthorizationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FB5179298FC66D0041F669 /* AuthorizationScreen.swift */; };
@@ -24,6 +26,8 @@
 		6448B9A8298FF38E00A46563 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6448B9AA298FF49900A46563 /* NewAccountScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountScreenViewModel.swift; sourceTree = "<group>"; };
 		64B708F12990450500819864 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		64C6AD212992D93400F4E716 /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		64C6AD232992D93E00F4E716 /* MainSceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSceneViewModel.swift; sourceTree = "<group>"; };
 		64FB5172298FC66D0041F669 /* Firebase-Auth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Firebase-Auth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FB5175298FC66D0041F669 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64FB5177298FC66D0041F669 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +57,15 @@
 				64B708F12990450500819864 /* UIView+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		64C6AD202992D90300F4E716 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				64C6AD212992D93400F4E716 /* MainScene.swift */,
+				64C6AD232992D93E00F4E716 /* MainSceneViewModel.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		64FB5169298FC66D0041F669 = {
@@ -89,9 +102,9 @@
 		64FB518B298FC7A70041F669 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				64C6AD202992D90300F4E716 /* Main */,
 				64FB518C298FC7B30041F669 /* Authorization */,
 				64FB518D298FDDBF0041F669 /* NewAccount */,
-				64FB518E298FDDCD0041F669 /* Login */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -112,13 +125,6 @@
 				6448B9AA298FF49900A46563 /* NewAccountScreenViewModel.swift */,
 			);
 			path = NewAccount;
-			sourceTree = "<group>";
-		};
-		64FB518E298FDDCD0041F669 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +209,8 @@
 				64FB5176298FC66D0041F669 /* AppDelegate.swift in Sources */,
 				64FB518A298FC7A10041F669 /* AuthorizationScreenViewModel.swift in Sources */,
 				64B708F22990450500819864 /* UIView+Ext.swift in Sources */,
+				64C6AD222992D93400F4E716 /* MainScene.swift in Sources */,
+				64C6AD242992D93E00F4E716 /* MainSceneViewModel.swift in Sources */,
 				64FB5190298FDDE80041F669 /* NewAccountScreen.swift in Sources */,
 				64FB5178298FC66D0041F669 /* SceneDelegate.swift in Sources */,
 			);

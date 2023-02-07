@@ -12,6 +12,7 @@ protocol AuthorizationScreenInterface {
     func configureLabels()
     func configureButtons()
     func showLoginError(errorType: LoginError)
+    func navigateMainMenu()
 }
 
 class AuthorizationScreen: UIViewController {
@@ -24,6 +25,8 @@ class AuthorizationScreen: UIViewController {
     private var informationLabel: UILabel!
     private var loginButton: UIButton!
     private var newAccountButton: UIButton!
+    private var showPasswordButton: UIButton!
+
 
     override func viewDidAppear(_ animated: Bool) {
         userTextField.becomeFirstResponder() 
@@ -45,13 +48,23 @@ class AuthorizationScreen: UIViewController {
 
     @objc private func didTapNewAccountButton(sender: UIButton) {
         sender.animateButton()
-        let newAccountScreen = NewAccountScreen()
-        navigationController?.pushViewController(newAccountScreen, animated: true)
+        let navigateVC = NewAccountScreen()
+        navigateVC.modalPresentationStyle = .fullScreen
+        navigateVC.modalTransitionStyle = .flipHorizontal
+        self.present(navigateVC, animated: true)
     }
     
+    @objc private func didTapShowPasswordButton(sender: UIButton) {
+        let result = viewModel.getShowPasswordImageName()
+        let image = result.0
+        let check = result.1
+        showPasswordButton.setImage(UIImage(systemName: image), for: .normal)
+        passwordTextField.isSecureTextEntry = check
+    }
 }
 
 extension AuthorizationScreen: AuthorizationScreenInterface {
+ 
   
     func configureTextFields() {
         view.backgroundColor = UIColor.white
@@ -64,6 +77,7 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         userTextField.layer.masksToBounds = true
         userTextField.autocapitalizationType = .none
         userTextField.textColor = UIColor.systemBackground
+        userTextField.autocorrectionType = .no
         userTextField.becomeFirstResponder()
         view.addSubview(userTextField)
 
@@ -160,6 +174,15 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         newAccountButton.addTarget(self, action: #selector(didTapNewAccountButton), for: .touchUpInside)
         view.addSubview(newAccountButton)
         
+        showPasswordButton = UIButton()
+        showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        showPasswordButton.frame = CGRect(x: 300,
+                                          y: 387,
+                                          width: 50, height: 50)
+        showPasswordButton.addTarget(self, action: #selector(didTapShowPasswordButton), for: .touchUpInside)
+        showPasswordButton.tintColor = .black
+        view.addSubview(showPasswordButton)
+        
         NSLayoutConstraint.activate([
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 35),
             loginButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
@@ -174,6 +197,8 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
             informationLabel.bottomAnchor.constraint(equalTo: newAccountButton.topAnchor, constant: -5),
             informationLabel.leadingAnchor.constraint(equalTo: newAccountButton.leadingAnchor),
             informationLabel.trailingAnchor.constraint(equalTo: newAccountButton.trailingAnchor),
+            
+            
         ])
     }
     
@@ -195,8 +220,17 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
                                           preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
             present(alert, animated: true)
+        case .atLeastSix:
+            break; 
         }
        
     }
+    
+    func navigateMainMenu() {
+        let navigateVC = MainScene()
+        navigateVC.modalPresentationStyle = .fullScreen
+        self.present(navigateVC, animated: false)
+    }
+    
     
 }

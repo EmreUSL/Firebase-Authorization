@@ -22,7 +22,7 @@ final class NewAccountScreen: UIViewController {
     private var emailLabel: UILabel!
     private var passwordLabel: UILabel!
     private var createButton: UIButton!
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,7 @@ final class NewAccountScreen: UIViewController {
                 let password = passwordTextField.text
         else { return }
         viewModel.createNewAccount(email: email, password: password)
+        
     }
 }
 
@@ -52,7 +53,9 @@ extension NewAccountScreen: NewAccountScreenInterface {
         emailTextField.layer.cornerRadius = 10
         emailTextField.layer.masksToBounds = true
         emailTextField.textColor = UIColor.systemBackground
+        emailTextField.autocapitalizationType = .none
         emailTextField.becomeFirstResponder()
+        emailTextField.autocorrectionType = .no
         view.addSubview(emailTextField)
         
         passwordTextField = UITextField()
@@ -62,6 +65,7 @@ extension NewAccountScreen: NewAccountScreenInterface {
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.textColor = UIColor.systemBackground
+        passwordTextField.autocapitalizationType = .none
         view.addSubview(passwordTextField)
         
         emailLabel = UILabel()
@@ -133,6 +137,11 @@ extension NewAccountScreen: NewAccountScreenInterface {
             present(alert, animated: true)
         case .wrong:
             break;
+        case .atLeastSix:
+            let alert = UIAlertController(title: "Password must be at least 6 digit!", message: "",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
+            present(alert, animated: true)
         }
     }
     
@@ -140,6 +149,10 @@ extension NewAccountScreen: NewAccountScreenInterface {
         let alert = UIAlertController(title: "New Account Successfully Created!", message: "",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Okey", style: .default, handler: { _ in
+            let navigateVC = AuthorizationScreen()
+            navigateVC.modalPresentationStyle = .fullScreen
+            navigateVC.modalTransitionStyle = .flipHorizontal
+            self.present(navigateVC, animated: true)
         }))
         present(alert, animated: true)
     }
