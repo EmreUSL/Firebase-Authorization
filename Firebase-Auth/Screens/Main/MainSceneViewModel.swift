@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import Firebase
 
 
 protocol MainSceneViewModelInterface {
     var view: MainSceneInterface? { get set}
     func viewDidLoad()
+    func logOut()
 }
 
 
@@ -19,7 +21,19 @@ final class MainSceneViewModel {
 }
 
 extension MainSceneViewModel: MainSceneViewModelInterface {
+    
     func viewDidLoad() {
         view?.configureVC()
     }
+    
+    func logOut() {
+        
+        do {
+            try Firebase.Auth.auth().signOut()
+        } catch {
+            print("An error occured")
+        }
+    }
+    
+
 }

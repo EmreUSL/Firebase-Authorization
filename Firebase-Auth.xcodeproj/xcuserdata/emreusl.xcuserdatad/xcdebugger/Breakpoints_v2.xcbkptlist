@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "928F22EB-90AE-4F80-AC71-9BA7F7024A5F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Firebase-Auth/Screens/Authorization/AuthorizationScreenViewModel.swift"
@@ -36,7 +36,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "928F22EB-90AE-4F80-AC71-9BA7F7024A5F - dbd35cd14335dced"
+                  uuid = "928F22EB-90AE-4F80-AC71-9BA7F7024A5F - dbd35cd14335dc8c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -46,12 +46,12 @@
                   urlString = "file:///Users/emreusl/Desktop/Git/Firebase-Auth/Firebase-Auth/Firebase-Auth/Screens/Authorization/AuthorizationScreenViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
                   offsetFromSymbolStart = "528">
                </Location>
                <Location
-                  uuid = "928F22EB-90AE-4F80-AC71-9BA7F7024A5F - 624cd70f9fec3b44"
+                  uuid = "928F22EB-90AE-4F80-AC71-9BA7F7024A5F - 624cd70f9fec3b7b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -61,8 +61,8 @@
                   urlString = "file:///Users/emreusl/Desktop/Git/Firebase-Auth/Firebase-Auth/Firebase-Auth/Screens/Authorization/AuthorizationScreenViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
                   offsetFromSymbolStart = "48">
                </Location>
             </Locations>
@@ -376,7 +376,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3ACFC1A4-AE28-4120-90E3-39EAD5339399"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Firebase-Auth/Screens/Authorization/AuthorizationScreenViewModel.swift"
@@ -449,6 +449,22 @@
             startingLineNumber = "60"
             endingLineNumber = "60"
             landmarkName = "didTapShowPasswordButton(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D375A06F-9418-4432-B5FC-C35699DB5008"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Firebase-Auth/Screens/Main/MainSceneViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "logOut()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

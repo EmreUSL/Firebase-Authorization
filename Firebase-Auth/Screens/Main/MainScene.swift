@@ -9,6 +9,7 @@ import UIKit
 
 protocol MainSceneInterface {
     func configureVC()
+    func navigateLogOut()
 }
 
 final class MainScene: UIViewController {
@@ -25,9 +26,15 @@ final class MainScene: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @objc private func didTapLogOutButton() {
+        button.animateButton()
+        viewModel.logOut()
+    }
+    
 }
 
 extension MainScene: MainSceneInterface {
+   
     func configureVC() {
         
         view.backgroundColor = UIColor.white
@@ -37,6 +44,8 @@ extension MainScene: MainSceneInterface {
         button.setTitle("LogOut", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.systemGreen
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(didTapLogOutButton), for: .touchUpInside)
         
         view.addSubview(button)
         
@@ -47,4 +56,13 @@ extension MainScene: MainSceneInterface {
             button.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+    
+    func navigateLogOut() {
+        let navigateVC = AuthorizationScreen()
+        navigateVC.modalPresentationStyle = .fullScreen
+        navigateVC.modalTransitionStyle = .partialCurl
+        self.present(navigateVC, animated: true)
+    }
+    
 }
+
