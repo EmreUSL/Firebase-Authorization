@@ -28,12 +28,13 @@ extension MainSceneViewModel: MainSceneViewModelInterface {
     
     func logOut() {
         
-        do {
-            try Firebase.Auth.auth().signOut()
-        } catch {
-            print("An error occured")
+        if Firebase.Auth.auth().currentUser != nil {
+            do {
+                try Firebase.Auth.auth().signOut()
+                view?.navigateLogOut()
+            } catch {
+                print("An error occured")
+            }
         }
     }
-    
-
 }

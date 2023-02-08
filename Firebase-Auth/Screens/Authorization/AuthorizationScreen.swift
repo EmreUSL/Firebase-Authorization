@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol AuthorizationScreenInterface {
+protocol AuthorizationScreenInterface: AnyObject {
     func configureTextFields()
     func configureLabels()
     func configureButtons()
@@ -24,18 +24,19 @@ class AuthorizationScreen: UIViewController {
     private var passwordLabel: UILabel!
     private var informationLabel: UILabel!
     private var loginButton: UIButton!
-    private var newAccountButton: UIButton!
     private var showPasswordButton: UIButton!
+    private var imageView: UIImageView!
 
 
     override func viewDidAppear(_ animated: Bool) {
-        userTextField.becomeFirstResponder() 
+        userTextField.becomeFirstResponder()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.view = self
         viewModel.viewDidLoad()
+        
     }
     
     @objc private func didTapLoginButton(sender: UIButton) {
@@ -46,11 +47,9 @@ class AuthorizationScreen: UIViewController {
         viewModel.loginAccount(email: email, password: password)
     }
 
-    @objc private func didTapNewAccountButton(sender: UIButton) {
-        sender.animateButton()
+    @objc private func didTapNewAccountButton(_ sender: UITapGestureRecognizer) {
         let navigateVC = NewAccountScreen()
         navigateVC.modalPresentationStyle = .fullScreen
-        navigateVC.modalTransitionStyle = .flipHorizontal
         self.present(navigateVC, animated: true)
     }
     
@@ -65,10 +64,11 @@ class AuthorizationScreen: UIViewController {
 
 extension AuthorizationScreen: AuthorizationScreenInterface {
  
+    //MARK: - TextFields
   
     func configureTextFields() {
         view.backgroundColor = UIColor.white
-        
+            
         userTextField = UITextField()
         userTextField.translatesAutoresizingMaskIntoConstraints = false
         userTextField.layer.borderWidth = 1
@@ -78,6 +78,8 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         userTextField.autocapitalizationType = .none
         userTextField.textColor = UIColor.systemBackground
         userTextField.autocorrectionType = .no
+        userTextField.leftViewMode = .always
+        userTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         userTextField.becomeFirstResponder()
         view.addSubview(userTextField)
 
@@ -90,9 +92,17 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         passwordTextField.textColor = UIColor.systemBackground
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none
+        passwordTextField.leftViewMode = .always
+        passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         passwordTextField.becomeFirstResponder()
         view.addSubview(passwordTextField)
     
+        imageView = UIImageView()
+        imageView.image = UIImage(named: "black")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        view.addSubview(imageView)
+        
         NSLayoutConstraint.activate([
             userTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: -100),
@@ -104,9 +114,16 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
             passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             passwordTextField.heightAnchor.constraint(equalToConstant: 45),
+            
+            imageView.topAnchor.constraint(equalTo: view.topAnchor,constant: 50),
+            imageView.bottomAnchor.constraint(equalTo: userTextField.topAnchor, constant: -30),
+            imageView.trailingAnchor.constraint(equalTo: userTextField.trailingAnchor),
+            imageView.leadingAnchor.constraint(equalTo: userTextField.leadingAnchor)
         
         ])
     }
+    
+    //MARK: - Labels
     
     func configureLabels() {
         
@@ -127,13 +144,18 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         
         informationLabel = UILabel()
         informationLabel.translatesAutoresizingMaskIntoConstraints = false
-        let attributedString = NSMutableAttributedString.init(string: "Don't you have an account?")
+        let attributedString = NSMutableAttributedString.init(string: "Don't have an account?")
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range:
                                         NSRange.init(location: 0, length: attributedString.length));
         informationLabel.attributedText = attributedString
-        informationLabel.font = .boldSystemFont(ofSize: 17)
+        informationLabel.font = .boldSystemFont(ofSize: 19)
         informationLabel.textColor = .black
         informationLabel.textAlignment = .center
+        
+        let labelTap = UITapGestureRecognizer(target: self,
+                                              action: #selector(didTapNewAccountButton(_:)))
+        informationLabel.isUserInteractionEnabled = true
+        informationLabel.addGestureRecognizer(labelTap)
         view.addSubview(informationLabel)
         
         
@@ -150,6 +172,8 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         ])
     }
     
+    //MARK: - Button
+    
     func configureButtons() {
         loginButton = UIButton()
         loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -158,21 +182,10 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         
         loginButton.backgroundColor = UIColor.systemGreen
         loginButton.layer.cornerRadius = 10
-      
+        
         loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         view.addSubview(loginButton)
         
-        
-        newAccountButton = UIButton()
-        newAccountButton.translatesAutoresizingMaskIntoConstraints = false
-        newAccountButton.setTitle("Create a New Account", for: .normal)
-        newAccountButton.setTitleColor(.white, for: .normal)
-        
-        newAccountButton.backgroundColor = UIColor.systemGreen
-        newAccountButton.layer.cornerRadius = 10
-        
-        newAccountButton.addTarget(self, action: #selector(didTapNewAccountButton), for: .touchUpInside)
-        view.addSubview(newAccountButton)
         
         showPasswordButton = UIButton()
         showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
@@ -183,21 +196,16 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         showPasswordButton.tintColor = .black
         view.addSubview(showPasswordButton)
         
+        
         NSLayoutConstraint.activate([
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 35),
             loginButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
             loginButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 45),
             
-            newAccountButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
-            newAccountButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
-            newAccountButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
-            newAccountButton.heightAnchor.constraint(equalToConstant: 40),
-            
-            informationLabel.bottomAnchor.constraint(equalTo: newAccountButton.topAnchor, constant: -5),
-            informationLabel.leadingAnchor.constraint(equalTo: newAccountButton.leadingAnchor),
-            informationLabel.trailingAnchor.constraint(equalTo: newAccountButton.trailingAnchor),
-            
+            informationLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            informationLabel.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
+            informationLabel.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
             
         ])
     }
@@ -221,7 +229,12 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
             alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
             present(alert, animated: true)
         case .atLeastSix:
-            break; 
+            break;
+        case .unaccepted:
+            let alert = UIAlertController(title: "Unaccepted email type!", message: "",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
+            present(alert, animated: true)
         }
        
     }
@@ -231,6 +244,5 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         navigateVC.modalPresentationStyle = .fullScreen
         self.present(navigateVC, animated: false)
     }
-    
     
 }

@@ -13,6 +13,7 @@ enum LoginError {
     case emptyPassword
     case wrong
     case atLeastSix
+    case unaccepted
 }
 
 protocol AuthorizationScreenViewModelInterface {
@@ -24,7 +25,7 @@ protocol AuthorizationScreenViewModelInterface {
 }
 
 final class AuthorizationScreenViewModel {
-    var view: AuthorizationScreenInterface?
+    weak var view: AuthorizationScreenInterface?
     private var check = true
 }
 
@@ -39,8 +40,13 @@ extension AuthorizationScreenViewModel: AuthorizationScreenViewModelInterface {
     
     func loginAccount(email: String, password: String) {
         
+      
         if email == "" { view?.showLoginError(errorType: LoginError.emptyEmail); return }
         if password == "" { view?.showLoginError(errorType: LoginError.emptyPassword); return }
+       
+        if email.contains("@gmail.com") != true {
+            view?.showLoginError(errorType: LoginError.unaccepted)
+        }
         
         Firebase.Auth.auth().signIn(withEmail: email, password: password) { _, error in
             guard error == nil else {

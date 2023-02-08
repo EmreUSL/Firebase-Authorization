@@ -22,6 +22,7 @@ final class NewAccountScreen: UIViewController {
     private var emailLabel: UILabel!
     private var passwordLabel: UILabel!
     private var createButton: UIButton!
+    private var cancelButton: UIButton!
 
 
     override func viewDidLoad() {
@@ -39,6 +40,11 @@ final class NewAccountScreen: UIViewController {
         viewModel.createNewAccount(email: email, password: password)
         
     }
+    
+    @objc private func didTapCancelButton(sender: UIButton) {
+        sender.animateButton()
+        dismiss(animated: true)
+    }
 }
 
 extension NewAccountScreen: NewAccountScreenInterface {
@@ -46,6 +52,8 @@ extension NewAccountScreen: NewAccountScreenInterface {
         
         view.backgroundColor = UIColor.white
         
+        //MARK: - Textfields
+    
         emailTextField = UITextField()
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.layer.borderWidth = 1
@@ -56,6 +64,8 @@ extension NewAccountScreen: NewAccountScreenInterface {
         emailTextField.autocapitalizationType = .none
         emailTextField.becomeFirstResponder()
         emailTextField.autocorrectionType = .no
+        emailTextField.leftViewMode = .always
+        emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         view.addSubview(emailTextField)
         
         passwordTextField = UITextField()
@@ -66,7 +76,11 @@ extension NewAccountScreen: NewAccountScreenInterface {
         passwordTextField.layer.masksToBounds = true
         passwordTextField.textColor = UIColor.systemBackground
         passwordTextField.autocapitalizationType = .none
+        passwordTextField.leftViewMode = .always
+        passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         view.addSubview(passwordTextField)
+        
+        //MARK: - Labels
         
         emailLabel = UILabel()
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +97,8 @@ extension NewAccountScreen: NewAccountScreenInterface {
         passwordLabel.font = .boldSystemFont(ofSize: 17)
         view.addSubview(passwordLabel)
         
+        //MARK: - Buttons
+        
         createButton = UIButton()
         createButton.translatesAutoresizingMaskIntoConstraints = false
         createButton.setTitle("Sign Up", for: .normal)
@@ -93,6 +109,18 @@ extension NewAccountScreen: NewAccountScreenInterface {
         createButton.backgroundColor = UIColor.systemGreen
         createButton.layer.cornerRadius = 10
         view.addSubview(createButton)
+        
+        cancelButton = UIButton()
+        cancelButton.setImage(UIImage(systemName: "multiply.circle"), for: .normal)
+        cancelButton.tintColor = .black
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(cancelButton)
+        
+        let guide = view.safeAreaLayoutGuide
+        
+        //MARK: - Constraints
         
         NSLayoutConstraint.activate([
             emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
@@ -118,7 +146,11 @@ extension NewAccountScreen: NewAccountScreenInterface {
             createButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
             createButton.heightAnchor.constraint(equalToConstant: 45),
             
+            cancelButton.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0),
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
         ])
+        
+        
         
     }
     
@@ -142,6 +174,8 @@ extension NewAccountScreen: NewAccountScreenInterface {
                                           preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Try again", style: .destructive))
             present(alert, animated: true)
+        case .unaccepted:
+            break;
         }
     }
     

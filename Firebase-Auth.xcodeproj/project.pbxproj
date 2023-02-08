@@ -102,9 +102,9 @@
 		64FB518B298FC7A70041F669 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				64C6AD202992D90300F4E716 /* Main */,
 				64FB518C298FC7B30041F669 /* Authorization */,
 				64FB518D298FDDBF0041F669 /* NewAccount */,
+				64C6AD202992D90300F4E716 /* Main */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
