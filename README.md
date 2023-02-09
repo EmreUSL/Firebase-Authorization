@@ -13,7 +13,6 @@
  <table>
   <tr margin="10px">
     <td>
-      &nbsp;
       <img src="https://user-images.githubusercontent.com/109242794/217938053-6954a30f-c645-4824-a637-13aab573cd60.png" alt="Simulator Screen Shot - iPhone 14 Pro - 2022-11-05 at 22 59 26" width="300" height="672"/>
       &nbsp;
       <img src="https://user-images.githubusercontent.com/109242794/217938122-f6423873-b216-4d3f-9316-0a9f0d9b9876.png" alt="Simulator Screen Shot - iPhone 14 Pro - 2022-11-05 at 22 59 26" width="300" height="672"/>
