@@ -189,9 +189,8 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
         
         showPasswordButton = UIButton()
         showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        showPasswordButton.frame = CGRect(x: 300,
-                                          y: 387,
-                                          width: 50, height: 50)
+        showPasswordButton.translatesAutoresizingMaskIntoConstraints = false
+
         showPasswordButton.addTarget(self, action: #selector(didTapShowPasswordButton), for: .touchUpInside)
         showPasswordButton.tintColor = .black
         view.addSubview(showPasswordButton)
@@ -206,7 +205,9 @@ extension AuthorizationScreen: AuthorizationScreenInterface {
             informationLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             informationLabel.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
             informationLabel.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
-            
+        
+            showPasswordButton.centerXAnchor.constraint(equalTo: passwordTextField.centerXAnchor, constant: 120),
+            showPasswordButton.centerYAnchor.constraint(equalTo: passwordTextField.centerYAnchor)
         ])
     }
     
